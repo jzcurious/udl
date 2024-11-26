@@ -1,0 +1,42 @@
+#include <scheme.sudl>
+
+string_var = "Hello World!"
+
+number_var = 24
+
+list_var =
+    - 111111
+    - 222222
+    - "333333"
+
+other_list_var = [
+    111,
+    222,
+    333,
+]
+
+enum_var = "yes"
+
+dict_var =
+    - "key1" -> 1
+    - "key2" -> "val2"
+    - "key3" -> "val3"
+
+tree_var =
+    - 0 ->
+        - 1 -> "leaf1"
+        - 2 -> "leaf2"
+    - 3 ->
+        - 4 -> "leaf3"
+        - 5 -> "leaf4"
+
+other_tree_var = {
+    0 -> {
+        1 -> "leaf1",
+        2 -> "leaf2",
+    },
+    3 -> {
+        4 -> "leaf3",
+        5 -> "leaf4",
+    }
+}

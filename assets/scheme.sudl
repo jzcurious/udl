@@ -1,0 +1,14 @@
+var string_var: Str = "some text"
+var number_var: Number = 3.14
+var list_var: List[Obj] = [1, 2, "3", string_var, number_var]
+var other_list_var: List[Str | Number] = [1111, "2222"]
+var string_or_list_var: List | Str = "some text"
+var dict_var: Dict[Str | Number -> Str] = {"111" -> "222", 222 -> "3333"}
+var enum_var: Enum["yes", "no"] = "yes"
+
+type Leaf = Str
+type Key = Number
+type Tree = Dict[Key -> Leaf | Tree]
+
+var tree_var: Tree = {0: {1 -> "leaf1", 2 -> "leaf2"}}
+var other_tree_var: Tree = {0: {1 -> "leaf1", 2 -> "leaf2"}}
