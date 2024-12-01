@@ -1,0 +1,27 @@
+/* Declaration */
+var Num x = 1;
+var Num | Str y = "5";
+var Num x !;
+
+var List<Num> list = [1, 2, 3];
+var List<Num | Str> list = [1, "2", 3];
+var List<Num | Str> list !;
+
+var Dict<Str : Num> dict = { "1" : 1 };
+var Dict<Str | Num : Num | Str> dict = { "1" : 1, 2 : "2"};
+var Dict<Str | Num : Num | Str> dict !;
+
+const Num b = 9;
+const List<Num> = [1, 2, 3];
+const Dict<Num : Str> = { 1 : "1" };
+
+type X = Num;
+type Y = Num | Str;
+type Tree = Dict<Str : Num | Str | Tree>;
+
+/* Collenctions */
+var List<Str> list =
+    "1111"
+    "2222"
+    "3333"
+;
