@@ -1,15 +1,15 @@
 /* Declaration */
 var Num x = 1;
 var Num | Str y = "5";
-var Num x !;
+var Num x = !;
 
 var List<Num> list = [1, 2, 3];
 var List<Num | Str> list = [1, "2", 3];
-var List<Num | Str> list !;
+var List<Num | Str> list = !;
 
 var Dict<Str : Num> dict = { "1" : 1 };
 var Dict<Str | Num : Num | Str> dict = { "1" : 1, 2 : "2"};
-var Dict<Str | Num : Num | Str> dict !;
+var Dict<Str | Num : Num | Str> dict = !;
 
 const Num b = 9;
 const List<Num> = [1, 2, 3];
@@ -24,4 +24,21 @@ var List<Str> list =
     "1111"
     "2222"
     "3333"
+;
+
+var Dict<Num : Str> dict =
+    0 : "val0"
+    1 : "val1"
+    2 : "val2"
+;
+
+var Tree tree =
+    0 : "leaf0"
+    1 :
+        2 : "leaf2"
+        3 : "leaf3"
+    4 :
+        5 :
+            6 : "leaf6"
+            7 : "leaf7"
 ;

@@ -12,12 +12,8 @@ class Driver final {
   // parser
 
  public:
-  Driver(const std::string& fname)
-      : _sstream(fname) {}
-
-  SourceStream& source() {
-    return _sstream;
-  }
+  Driver(const std::string& fname);
+  SourceStream& source();
 };
 
 }  // namespace udl

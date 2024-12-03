@@ -5,16 +5,24 @@
 
 namespace udl {
 
-enum class Tid {
+enum Tid {
   ident_var,
   ident_type,
   list_str,
   lit_num,
+  unknown_char,
 };
 
-struct Token {
-  Tid id;
-  std::string val;
+struct Cursor {
+  std::size_t nstmt = 0;
+  std::size_t nrow = 0;
+  std::size_t ncol = 0;
+};
+
+struct Token final {
+  Tid tid = Tid::unknown_char;
+  std::string val = "";
+  Cursor cursor;
 };
 
 }  // namespace udl

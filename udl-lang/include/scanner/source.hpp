@@ -5,14 +5,12 @@
 
 namespace udl {
 
-class SourceStream {
- private:
-  std::ifstream _ifstream;
+class Source : public std::ifstream {
+  // TODO: do not inherit from std::ifstream
 
  public:
   const std::string fname;
-  SourceStream(const std::string& fname);
-  std::ifstream& operator>>(std::string& s);
+  Source(const std::string& fname);
 };
 
 }  // namespace udl
