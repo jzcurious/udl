@@ -14,8 +14,6 @@ class Scanner final {
   Cursor _cursor;
 
  public:
-  const char delim = ';';
-
   Scanner(Source& source);
   std::string next_stmt();
   bool eof();

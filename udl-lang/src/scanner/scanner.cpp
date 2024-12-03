@@ -14,13 +14,13 @@ bool Scanner::eof() {
 
 std::string Scanner::next_stmt() {
   std::string stmt;
-  std::getline(_source, stmt, delim);
+  _source >> stmt;
   _cursor.nstmt++;
   return stmt;
 }
 
 std::vector<Token> Scanner::scan() {
   std::string stmt = next_stmt();
-  auto t = Token{.cursor = _cursor};
+
   return {Token{}};
 }
