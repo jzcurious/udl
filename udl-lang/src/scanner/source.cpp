@@ -6,10 +6,10 @@ Source::Source(const std::string& fname)
     : _ifstream(fname)
     , fname(fname) {}
 
-Source& Source::operator>>(std::string& stmt) {
-  std::string stmt_head;
-  std::getline(_ifstream, stmt_head, _delim);
-  stmt = stmt_head + _delim;
+Source& Source::operator>>(Row& row) {
+  if (eof()) return *this;
+  row.num = ++_row_counter;
+  std::getline(_ifstream, row.content);
   return *this;
 }
 

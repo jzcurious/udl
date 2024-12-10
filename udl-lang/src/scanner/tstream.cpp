@@ -12,7 +12,9 @@ TokenStream& TokenStream::operator>>(Token& token) {
 
   if (_tbuffer.empty()) {
     auto tokens = _scanner.scan();
-    for (auto t : tokens) _tbuffer.push(t);
+    for (; not tokens.empty(); tokens.pop()) {
+      _tbuffer.push(tokens.front());
+    }
   }
 
   token = _tbuffer.front();
@@ -22,5 +24,5 @@ TokenStream& TokenStream::operator>>(Token& token) {
 }
 
 bool TokenStream::eof() {
-  return _tbuffer.empty() and _scanner.eof();
+  return _tbuffer.empty() and _source.eof();
 }

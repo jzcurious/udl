@@ -5,15 +5,20 @@
 
 namespace udl {
 
+struct Row {
+  std::size_t num;
+  std::string content;
+};
+
 class Source {
  private:
-  const char _delim = ';';
+  std::size_t _row_counter = 0;
   std::fstream _ifstream;
 
  public:
   const std::string fname;
   Source(const std::string& fname);
-  Source& operator>>(std::string& stmt);
+  Source& operator>>(Row& row);
   bool eof();
 };
 

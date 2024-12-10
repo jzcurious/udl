@@ -1,26 +1,24 @@
 #include "scanner/scanner.hpp"
-#include "scanner/token.hpp"
-#include <string>
 
 using namespace udl;
 
 Scanner::Scanner(Source& source)
-    : _source(source)
-    , _cursor() {}
+    : _source(source) {}
 
-bool Scanner::eof() {
-  return _source.eof();
-}
+std::queue<Token> Scanner::scan() {
+  std::queue<Token> tokens;
+  Row row;
 
-std::string Scanner::next_stmt() {
-  std::string stmt;
-  _source >> stmt;
-  _cursor.nstmt++;
-  return stmt;
-}
+  _source >> row;
+  Span span(row.content);
 
-std::vector<Token> Scanner::scan() {
-  std::string stmt = next_stmt();
+  for (; span.size();) {
+    auto token = ScanTable[span];
+    auto ncol = span.begin_idx();
+    token.cursor = {row.num, ncol};
+    span.begin_idx(ncol + token.val.size());
+    tokens.push(token);
+  }
 
-  return {Token{}};
+  return tokens;
 }

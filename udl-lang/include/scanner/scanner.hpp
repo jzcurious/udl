@@ -1,23 +1,21 @@
 #ifndef _UDL_SCANNER_
 #define _UDL_SCANNER_
 
+#include "scanner/scantable.hpp"  // IWYU pragma: export
 #include "scanner/token.hpp"
 #include "source.hpp"
 
-#include <vector>
+#include <queue>
 
 namespace udl {
 
 class Scanner final {
  private:
   Source& _source;
-  Cursor _cursor;
 
  public:
   Scanner(Source& source);
-  std::string next_stmt();
-  bool eof();
-  std::vector<Token> scan();
+  std::queue<Token> scan();
 };
 
 }  // namespace udl

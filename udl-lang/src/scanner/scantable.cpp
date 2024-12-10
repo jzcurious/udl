@@ -3,12 +3,12 @@
 
 using namespace udl;
 
-Token ScanTable::operator[](const std::string& s) {
+Token ScanTable::operator[](const Span& span) {
   std::smatch sm;
   std::size_t i = 0;
 
   for (auto p : _patterns) {
-    std::regex_search(s, sm, _patterns[i]);
+    std::regex_search(span.begin(), span.end(), sm, _patterns[i]);
     if (sm.size()) return Token{static_cast<Tid>(i), sm[0]};
     ++i;
   }
