@@ -15,12 +15,12 @@ file(GLOB_RECURSE SRC
     ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
 )
 
-add_library(udl-lang STATIC ${SRC})
+add_library(udl STATIC ${SRC})
 
-target_include_directories(udl-lang PRIVATE
+target_include_directories(udl PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/
 )
 
-target_link_libraries(udl-lang PRIVATE
+target_link_libraries(udl PUBLIC
     strspan
 )

@@ -11,5 +11,5 @@ else()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic -O3")
 endif()
 
-# add_subdirectory(tests)
+add_subdirectory(tests)
 add_subdirectory(udl-lang)

@@ -16,12 +16,10 @@ add_executable(udl-tests
     ${CMAKE_CURRENT_SOURCE_DIR}/src/tests.cpp
 )
 
-target_include_directories(udl-tests PRIVATE
-)
-
 target_link_libraries(udl-tests PRIVATE
     GTest::gtest_main
+    udl
 )
 
 enable_testing()
-gtest_discover_tests(poly-tests)
+gtest_discover_tests(udl-tests)

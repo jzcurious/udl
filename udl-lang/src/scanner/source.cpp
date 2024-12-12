@@ -6,11 +6,19 @@ Source::Source(const std::string& fname)
     : _ifstream(fname)
     , fname(fname) {}
 
-Source& Source::operator>>(Row& row) {
+Source& Source::operator>>(Line& line) {
   if (eof()) return *this;
-  row.num = ++_row_counter;
-  std::getline(_ifstream, row.content);
+
+  for (line.content = '\n'; line.content == "\n";) {
+    std::getline(_ifstream, line.content);
+    line.num = ++_line_counter;
+  }
+
   return *this;
+}
+
+Source::operator bool() {
+  return not _ifstream.eof();
 }
 
 bool Source::eof() {

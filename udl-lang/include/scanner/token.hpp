@@ -6,11 +6,28 @@
 namespace udl {
 
 enum Tid {
-  semicolon,
-  ident_var,
+  indent,
+  space,
+  type_kw,
+  var_kw,
   ident_type,
-  list_str,
-  lit_num,
+  join,
+  ident_var,
+  assign,
+  str_lit,
+  num_lit,
+  semicolon,
+  lbracket,
+  rbracket,
+  lbrace,
+  rbrace,
+  langle,
+  rangle,
+  colon,
+  comma,
+  newline,
+  line_comment,
+  block_comment,
   unknown,
 };
 
@@ -21,7 +38,7 @@ struct Cursor {
 
 struct Token final {
   Tid tid = Tid::unknown;
-  std::string val = "";
+  std::string val;
   Cursor cursor;
 };
 

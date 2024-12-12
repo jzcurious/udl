@@ -2,8 +2,8 @@
 #define _UDL_SCANNER_
 
 #include "scanner/scantable.hpp"  // IWYU pragma: export
+#include "scanner/source.hpp"
 #include "scanner/token.hpp"
-#include "source.hpp"
 
 #include <queue>
 
@@ -12,10 +12,15 @@ namespace udl {
 class Scanner final {
  private:
   Source& _source;
+  std::queue<Token> _token_buffer;
+
+  void _scan(const Source::Line& line);
 
  public:
   Scanner(Source& source);
-  std::queue<Token> scan();
+  Scanner& operator>>(Token& token);
+  operator bool();
+  bool source_eof();
 };
 
 }  // namespace udl

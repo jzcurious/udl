@@ -1,15 +1,15 @@
 /* Declaration */
 var Num x = 1;
 var Num | Str y = "5";
-var Num x = !;
+var Num x = 333;
 
 var List<Num> list = [1, 2, 3];
 var List<Num | Str> list = [1, "2", 3];
-var List<Num | Str> list = !;
+var List<Num | Str> list = [2, 3, 5];
 
 var Dict<Str : Num> dict = { "1" : 1 };
 var Dict<Str | Num : Num | Str> dict = { "1" : 1, 2 : "2"};
-var Dict<Str | Num : Num | Str> dict = !;
+var Dict<Str | Num : Num | Str> dict = { "1" : 3 };
 
 const Num b = 9;
 const List<Num> = [1, 2, 3];

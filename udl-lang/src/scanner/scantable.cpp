@@ -15,3 +15,7 @@ Token ScanTable::operator[](const Span& span) {
 
   return Token{};
 }
+
+const char* ScanTable::operator[](const Token& token) {
+  return _repr[token.tid];
+}

@@ -5,20 +5,21 @@
 
 namespace udl {
 
-struct Row {
-  std::size_t num;
-  std::string content;
-};
-
 class Source {
  private:
-  std::size_t _row_counter = 0;
+  std::size_t _line_counter = 0;
   std::fstream _ifstream;
 
  public:
+  struct Line {
+    std::size_t num;
+    std::string content;
+  };
+
   const std::string fname;
   Source(const std::string& fname);
-  Source& operator>>(Row& row);
+  Source& operator>>(Line& line);
+  operator bool();
   bool eof();
 };
 
