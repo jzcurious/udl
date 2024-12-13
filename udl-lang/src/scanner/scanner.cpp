@@ -1,6 +1,5 @@
 #include "scanner/scanner.hpp"
 #include "scanner/source.hpp"
-#include <cctype>
 
 using namespace udl;
 
@@ -10,7 +9,7 @@ Scanner::Scanner(Source& source)
 void Scanner::_scan(const Source::Line& line) {
   Span span(line.content);
 
-  for (std::size_t ncol = 0; span.size(); ncol = span.begin_idx()) {
+  for (std::size_t ncol = 0; not span.empty(); ncol = span.begin_idx()) {
     auto token = ScanTable[span];
     token.cursor = {line.num, ncol + 1};
     span.begin_idx(ncol + token.val.size());
