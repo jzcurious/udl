@@ -1,0 +1,10 @@
+E -> S ; E'
+E' -> S ; E' | e
+S -> D | U
+D -> Dt | Dv
+Dt -> type It = Vt
+Vt -> It Jt
+Jt -> Jt' \| It | e
+Dv -> var Vt Iv = Vv
+Vv -> L | Iv
+U -> Iv = Vv

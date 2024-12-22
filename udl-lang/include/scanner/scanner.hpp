@@ -14,13 +14,13 @@ class Scanner final {
   Source& _source;
   std::queue<Token> _token_buffer;
 
-  void _scan(const Source::Line& line);
+  void _scan_line(const Source::Line& line);
 
  public:
   Scanner(Source& source);
   Scanner& operator>>(Token& token);
   operator bool();
-  bool source_eof();
+  bool eof();
 };
 
 }  // namespace udl

@@ -1,4 +1,5 @@
 #include "scanner/scanner.hpp"
+#include "scanner/scantable.hpp"
 #include "scanner/source.hpp"
 
 using namespace udl;
@@ -6,34 +7,41 @@ using namespace udl;
 Scanner::Scanner(Source& source)
     : _source(source) {}
 
-void Scanner::_scan(const Source::Line& line) {
+void Scanner::_scan_line(const Source::Line& line) {
   Span span(line.content);
 
   for (std::size_t ncol = 0; not span.empty(); ncol = span.begin_idx()) {
     auto token = ScanTable[span];
-    token.cursor = {line.num, ncol + 1};
     span.begin_idx(ncol + token.val.size());
+
+    if (ScanTable::skip.contains(token.tid)) continue;
+
+    token.cursor = {line.num, ncol + 1};
     _token_buffer.push(token);
   }
 }
 
 Scanner& Scanner::operator>>(Token& token) {
   if (_source.eof()) return *this;
-  if (_token_buffer.empty()) {
+
+  while (_token_buffer.empty() and not _source.eof()) {
     Source::Line line;
     _source >> line;
-    if (not line.content.size()) return *this;
-    _scan(line);
+    _scan_line(line);
   }
+
+  if (_token_buffer.empty()) return *this;
+
   token = _token_buffer.front();
   _token_buffer.pop();
+
   return *this;
 }
 
-bool Scanner::source_eof() {
+bool Scanner::eof() {
   return _token_buffer.empty() and _source.eof();
 }
 
 Scanner::operator bool() {
-  return not source_eof();
+  return not eof();
 }

@@ -9,13 +9,17 @@ Token ScanTable::operator[](const Span& span) {
 
   for (auto p : _patterns) {
     std::regex_search(span.begin(), span.end(), sm, _patterns[i]);
-    if (sm.size()) return Token{static_cast<Tid>(i), sm[0]};
+    if (sm.size()) return Token{static_cast<Tid>(i + 1), sm[0]};
     ++i;
   }
 
-  return Token{};
+  return Token{Tid::unknown};
 }
 
 const char* ScanTable::operator[](const Token& token) {
   return _repr[token.tid];
+}
+
+const char* ScanTable::operator[](Tid tid) {
+  return _repr[tid];
 }
