@@ -5,6 +5,9 @@
 #include "scanner/source.hpp"
 #include "scanner/token.hpp"
 
+#include <format>  // IWYU pragma: export
+#include <iostream>  // IWYU pragma: export
+
 #include <queue>
 
 namespace udl {

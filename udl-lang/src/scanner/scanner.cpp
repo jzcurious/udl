@@ -1,6 +1,5 @@
 #include "scanner/scanner.hpp"
-#include "scanner/scantable.hpp"
-#include "scanner/source.hpp"
+#include "messenger/messenger.hpp"
 
 using namespace udl;
 
@@ -15,8 +14,14 @@ void Scanner::_scan_line(const Source::Line& line) {
     span.begin_idx(ncol + token.val.size());
 
     if (ScanTable::skip.contains(token.tid)) continue;
+    token.cursor = {_source.fname, line.num, ncol + 1};
 
-    token.cursor = {line.num, ncol + 1};
+    // TODO: replace to message
+    if (token.tid == Tid::unknown) {
+      Messenger::unknown_symbol(token);
+      exit(1);
+    }
+
     _token_buffer.push(token);
   }
 }

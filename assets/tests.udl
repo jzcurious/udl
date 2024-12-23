@@ -39,9 +39,9 @@ const Dict<Num | Str, Num | Str> d = {1 : "1", "2" : 2};
 const Dict<Num | Str, Num | Dict<Num | Str, Str | Num>> d = {1 : "1", 2 : {3 : 4,}};
 const Dict<Num | Str, Num | Dict<Num | Str, Str | X<U, V>>> d = {2 : {3 : 4}, 1 : "1",};
 
-class Point {
+struct Point {
     var Num x = 0;
     var Num y = 0;
-
-    x = 1;
 };
+
+type T = U<T, V>;

@@ -4,14 +4,16 @@ using namespace udl;
 
 Parser::Parser(Scanner& scanner)
     : _scanner(scanner)
-    , _sym() {}
+    , _first_sym()
+    , _follow_sym() {}
 
 void Parser::parse() {
   _parse_expr();
 }
 
 bool Parser::_next() {
-  return _scanner >> _sym;
+  _first_sym = _follow_sym;
+  return _scanner >> _follow_sym;
 }
 
 void Parser::_parse_expr() {
@@ -23,47 +25,43 @@ void Parser::_parse_expr() {
 }
 
 void Parser::_parse_stmt() {
-  switch (
-      _expect(Tid::type_kw, Tid::var_kw, Tid::const_kw, Tid::class_kw, Tid::var_ident)) {
-    case Tid::type_kw:
-    case Tid::var_kw:
-    case Tid::const_kw:
-    case Tid::class_kw: _parse_decl(); return;
-    case Tid::var_ident: _parse_var_upd(); return;
-    default: return;
+  if (_accept(Tid::var_id)) {
+    _parse_var_upd();
+    return;
   }
+  _parse_decl();
 }
 
 void Parser::_parse_decl() {
-  switch (_expect(Tid::type_kw, Tid::var_kw, Tid::const_kw, Tid::class_kw)) {
-    case Tid::type_kw: _parse_type_decl(); return;
+  switch (_expect(Tid::type_kw, Tid::var_kw, Tid::const_kw, Tid::struct_kw)) {
     case Tid::var_kw:
-    case Tid::const_kw: _parse_var_or_const_decl(); return;
-    case Tid::class_kw: _parse_class_decl(); return;
+    case Tid::const_kw: _parse_inst_decl(); return;
+    case Tid::type_kw: _parse_type_decl(); return;
+    case Tid::struct_kw: _parse_class_decl(); return;
     default: return;
   }
 }
 
 void Parser::_parse_type_decl() {
-  _expect(Tid::type_ident);
+  _expect(Tid::type_id);
   _expect(Tid::assign);
   _parse_type_val();
 }
 
-void Parser::_parse_var_or_const_decl() {
+void Parser::_parse_inst_decl() {
   _parse_type_val();
-  _expect(Tid::var_ident);
+  _expect(Tid::var_id);
   _expect(Tid::assign);
-  _parse_var_or_const_val();
+  _parse_inst_val();
 }
 
 void Parser::_parse_var_upd() {
   _expect(Tid::assign);
-  _parse_var_or_const_val();
+  _parse_inst_val();
 }
 
 void Parser::_parse_type_val() {
-  _expect(Tid::type_ident);
+  _expect(Tid::type_id);
 
   if (_accept(Tid::langle)) {
     do {
@@ -77,9 +75,8 @@ void Parser::_parse_type_val() {
   while (_accept(Tid::join)) _parse_type_val();
 }
 
-void Parser::_parse_var_or_const_val() {
-  switch (
-      _expect(Tid::str_lit, Tid::num_lit, Tid::var_ident, Tid::lbracket, Tid::lbrace)) {
+void Parser::_parse_inst_val() {
+  switch (_expect(Tid::str_lit, Tid::num_lit, Tid::var_id, Tid::lbracket, Tid::lbrace)) {
     case Tid::lbracket: _parse_list(); return;
     case Tid::lbrace: _parse_dict(); return;
     default: return;
@@ -93,7 +90,7 @@ void Parser::_parse_list() {
 
   do {
     if (_accept(Tid::rbracket)) return;
-    _parse_var_or_const_val();
+    _parse_inst_val();
   }
   while (_accept(Tid::comma));
 
@@ -107,9 +104,9 @@ void Parser::_parse_dict() {
 
   do {
     if (_accept(Tid::rbrace)) return;
-    _parse_var_or_const_val();
+    _parse_inst_val();
     _expect(Tid::colon);
-    _parse_var_or_const_val();
+    _parse_inst_val();
   }
   while (_accept(Tid::comma));
 
@@ -117,12 +114,12 @@ void Parser::_parse_dict() {
 }
 
 void Parser::_parse_class_decl() {
-  _expect(Tid::type_ident);
+  _expect(Tid::type_id);
   _expect(Tid::lbrace);
 
   do {
     if (_accept(Tid::rbrace)) return;
-    _parse_stmt();
+    _parse_decl();
   }
   while (_accept(Tid::semicolon));
 
